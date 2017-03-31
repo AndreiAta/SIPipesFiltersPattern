@@ -1,11 +1,11 @@
-/**
- * Created by mancr on 3/31/2017.
- */
-public class CensorFilter implements Filter<StringPipe, Pipe> {
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
+public class CensorFilter implements Filter<StringPipe, StringPipe> {
 
     @Override
-    public Pipe process(StringPipe inputStream) {
-        Pipe outputStream = new StringPipe();
+    public StringPipe process(StringPipe inputStream) {
+        StringPipe outputStream = new StringPipe();
 
         while (inputStream.hasNext()) {
             String message = (String) inputStream.pop();
@@ -14,8 +14,24 @@ public class CensorFilter implements Filter<StringPipe, Pipe> {
         return outputStream;
     }
 
-    public String censorMessge(String message) {
-        return "censoring " + message;
+    private String censorMessge(String message) {
+        String[] wordsToCensor = {"arse", "arsehole", "bastard", "berk", "bint", "blimey", "blighter", "bloody", "bollocks", "bugger", "cack", "chav", "cobblers", "cad", "cock", "codger", "crikey", "cunt", "dick", "duffer", "feck", "fuck", "gormless", "knob", "manky", "minger", "minging", "munter", "naff", "numpty", "nutter", "pillock", "pish", "pissed", "plonker", "poxy", "prat", "rotter", "scrubber", "shit", "swine", "taking", "tosser", "tuss", "twat", "wally", "wanker"};
+
+        for(String wordToCensor: wordsToCensor) {
+            String replacement = stringOfSize(wordToCensor.length(), '*');
+
+            // Case insensitive replacer
+            message = Pattern.compile("(?i)"+wordToCensor).matcher(message).replaceAll(replacement);
+        }
+
+        return message;
+    }
+
+    private static String stringOfSize(int size, char ch)
+    {
+        final char[] array = new char[size];
+        Arrays.fill(array, ch);
+        return new String(array);
     }
 
 
