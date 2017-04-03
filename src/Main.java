@@ -9,9 +9,9 @@ public class Main {
         StringPipe capitalizedPipe;
 
         // Filters
-        CensorFilter censorFilter = new CensorFilter();
-        CensorFilter emojiFilter;        //  = new EmojiFilter();      TODO uncomment
-        CensorFilter capitalizeFilter;   //  = new CapitalizeFilter(); TODO uncomment
+        Filter censorFilter = new CensorFilter();
+        Filter emojiFilter  = new SmileyFilter();
+//        Filter capitalizeFilter  = new CapitalizeFilter();
 
         // Initialize raw pipe
         rawPipe = new StringPipe();
@@ -20,13 +20,16 @@ public class Main {
         rawPipe.push("Hello World!");
         rawPipe.push("Another message :)");
         rawPipe.push("Pinnapple on pizza :)");
-        rawPipe.push("I have a bloody pen!! I am an arse. Fuck my life");
+        rawPipe.push("I have a bloody pen!! I am an arse. Fuck my life :(");
 
         // Retrieve filtered messages from the rawPipe inside the censoredPipe
-        censoredPipe        = censorFilter.process(rawPipe);
+        censoredPipe     = (StringPipe) censorFilter.process(rawPipe);
         System.out.println(censoredPipe.toString());
 
-        // emojiPipe        = emojiFilter.process(censoredPipe);   TODO uncomment
-        // capitalizedPipe  = capitalizeFilter.process(emojiPipe); TODO uncomment
+        emojiPipe        = (StringPipe) emojiFilter.process(censoredPipe);
+        System.out.println(emojiPipe.toString());
+
+//        capitalizedPipe  = (StringPipe) capitalizeFilter.process(emojiPipe);
+//        System.out.println(capitalizedPipe.toString());
     }
 }
