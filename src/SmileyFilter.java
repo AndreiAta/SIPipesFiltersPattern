@@ -24,7 +24,7 @@ public class SmileyFilter implements Filter<StringPipe, StringPipe>
         HashMap<String, String> smileys = new HashMap<String, String>();
         smileys.put(":\\(", "<img src=\"assets/SadFace.jpg\" />");
         smileys.put(":\\)", "<img src=\"assets/HappyFace.jpg\" />");
-        smileys.put(":D", "<img src=\"assets/DFace.jpg\" />");
+        smileys.put(":D",   "<img src=\"assets/DFace.jpg\" />");
 
         for (Map.Entry< String, String > smiley: smileys.entrySet())
             message = message.replaceAll(smiley.getKey(), smiley.getValue());
